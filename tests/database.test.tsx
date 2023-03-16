@@ -6,10 +6,10 @@ dotenv.config(); // Load environment variables
 describe('Database Connection', () => {
   it('Should connect to the database successfully', (done) => {
     const connection = mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_DEFAULT_SCHEMA
+      host: process.env.DB_HOST || "localhost",
+      user: process.env.DB_USER || "root",
+      password: process.env.DB_PASS || "password",
+      database: process.env.DB_DEFAULT_SCHEMA || "test"
     });
 
     connection.connect((err: any) => {
