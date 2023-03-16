@@ -32,4 +32,4 @@ jobs:
     - name: Start the server and run tests
       run: |
         npm start &
-        npm run test
+        npx jest
