@@ -1,4 +1,4 @@
-name: Node.js 19 Test
+name: Build and Test
 
 on:
   push:
@@ -10,37 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19'
+        cache: 'npm'
 
-      - name: Install dependencies
-        run: |
-          npm install
+    - name: Install MariaDB and execute SQL file
+      run: |
+        sudo apt-get install mariadb-server
+        mysql -u root -e "CREATE DATABASE mydatabase;"
+        mysql -u root mydatabase < ./sql.sql
 
-      - name: Set up MariaDB
-        uses: docker://mariadb:10.6
-        with:
-          env:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: testdb
-        ports:
-          - "3306:3306"
-        timeout-minutes: 10
+    - name: Install dependencies and build
+      run: |
+        npm ci
+        npm run build
 
-      - name: Create database tables
-        run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot testdb < ./sql.sql
-
-      - name: Start the app and run tests
-        run: |
-          npm start &
-          npm test &
-
-      - name: Wait for the tests to finish
-        run: |
-          wait $!
+    - name: Start the server and run tests
+      run: |
+        npm start &
+        npm run test
