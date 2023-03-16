@@ -1,4 +1,3 @@
-import { generateSalt } from "../../functions/generateSalt.js";
 import crypto from "crypto";
 import dotenv from "dotenv";
 import express from "express";
@@ -14,9 +13,8 @@ router.use(cors());
 // import database connection object and helper functions
 import { connection } from "../../functions/DB_Connection";
 import { usernameValidator } from "../../functions/usernameValidator.js";
-import { generateTOTP } from "../../functions/generateTOTP.js";
 
-console.log("Loaded User Register Endpoint");
+console.log("Loaded User Login Endpoint");
 
 // initialize multer for file uploads
 const upload = multer();
@@ -24,18 +22,13 @@ const upload = multer();
 // handle POST requests to register new users
 router.post("/", upload.none(), async (request, response) => {
   try {
-    const { username, password, code } = request.body;
+    const { username, password } = request.body;
 
     // check for missing parameters
-    if (!username || !password || !code) {
+    if (!username || !password) {
       return response
         .status(401)
-        .send({ message: "missing username, code or password" });
-    }
-
-    // verify the TOTP code
-    if(generateTOTP() != code){
-      return response.status(401).send({"message": "Invalid TOTP code"})
+        .send({ message: "missing username or password" });
     }
 
     // validate the username
@@ -46,17 +39,18 @@ router.post("/", upload.none(), async (request, response) => {
         .send({ error: "Illegal Username" });
     }
 
-    // generate a random salt
-    const salt = generateSalt(30);
-
     // insert the new user into the database
-    await (await connection).query(
-      "INSERT INTO users (username, password_hash) VALUES (?,?)",
+   result =  await (await connection).query(
+      "SELECT 1 FROM users WHERE username = ? AND password_hash = ?",
       [
         username,
         crypto.createHash("sha256").update(password).digest("hex"),
       ]
     );
+
+  if(result[0].length=== 0){
+    return response.status(401).send({message: "Invalid Username or password"})
+  }
 
     // generate a random token
     const token = crypto.randomBytes(30).toString("hex");

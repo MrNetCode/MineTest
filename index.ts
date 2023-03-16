@@ -10,7 +10,7 @@ app.use(cors());
 
 import user_register from "./routes/user/register";
 import rateLimit from "express-rate-limit";
-// import user-login from "./routes/";
+ import user_login from "./routes/user/login";
 // import user-logout from "./routes/";
 // import question-create from "./routes/";
 // import question-edit from "./routes/";
@@ -21,11 +21,17 @@ import rateLimit from "express-rate-limit";
 // import test-fetch from "./routes/";
 // import test-deploy from "./routes/";
 
-app.use("/api/user", rateLimit({
+app.use("/api/user/register", rateLimit({
     windowMs: 200, // 200ms
     max: 100, // limit each IP to 1 requests per windowMs
     message: "Too many requests, please try again later."
   }) , user_register);
+
+app.use("/api/user/login", rateLimit({
+    windowMs: 200, // 200ms
+    max: 100, // limit each IP to 1 requests per windowMs
+    message: "Too many requests, please try again later."
+  }) , user_login);
 
 
 app.listen(PORT, () => console.log("Server running on http://localhost:5000"));
