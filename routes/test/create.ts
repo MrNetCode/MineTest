@@ -13,10 +13,8 @@ router.use(cors());
 
 // import database connection object and helper functions
 import { connection } from "../../functions/DB_Connection";
-import { usernameValidator } from "../../functions/usernameValidator.js";
-import { generateTOTP } from "../../functions/generateTOTP.js";
 
-console.log("Loaded User Register Endpoint");
+console.log("Loaded Test Create Endpoint");
 
 // initialize multer for file uploads
 const upload = multer();
@@ -24,54 +22,38 @@ const upload = multer();
 // handle POST requests to register new users
 router.post("/", upload.none(), async (request, response) => {
   try {
+
     if(!request.body){
       return response.status(400).send({message :"Bad Request"})
     }
-    const { username, password, code } = request.body;
+    const { token, name } = request.body;
 
     // check for missing parameters
-    if (!username || !password || !code) {
+    if (!token || !name) {
       return response
         .status(401)
-        .send({ message: "missing username, code or password" });
+        .send({ message: "missing token or name" });
     }
-
-    // verify the TOTP code
-    if(generateTOTP() != code){
-      return response.status(401).send({"message": "Invalid TOTP code"})
-    }
-
-    // validate the username
-    let result: any = usernameValidator(username);
-    if (result != 0) {
-      return response
-        .status(401)
-        .send({ error: "Illegal Username" });
-    }
-
-    // generate a random salt
-    const salt = generateSalt(30);
 
     // insert the new user into the database
-    await (await connection).query(
-      "INSERT INTO users (username, password_hash) VALUES (?,?)",
-      [
-        username,
-        crypto.createHash("sha256").update(password).digest("hex"),
-      ]
+    let result: any = await (await connection).query(
+      "SELECT username FROM tokens where token = ?",
+      [token]
     );
 
-    // generate a random token
-    const token = crypto.randomBytes(30).toString("hex");
+    if(result[0].length === 0){
+        return response.status(401).send({message: "Invalid token"})
+      }
 
-    // insert the token into the database
+
+    // insert the test into the database
     await (await connection).query(
-      "INSERT INTO tokens (username, token) VALUES (?,?)",
-      [username, token]
+      "INSERT INTO tests (id, name, author) VALUES (?,?,?)",
+      [crypto.randomUUID(), name, result[0][0].username]
     );
 
     // return the token to the client
-    return response.status(201).send({ token: token });
+    return response.status(201).send({ message: "Created" });
 
   } catch (error: any) {
     // handle errors

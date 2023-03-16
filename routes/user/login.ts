@@ -22,6 +22,9 @@ const upload = multer();
 // handle POST requests to register new users
 router.post("/", upload.none(), async (request, response) => {
   try {
+    if(!request.body){
+      return response.status(400).send({message :"Bad Request"})
+    }
     const { username, password } = request.body;
 
     // check for missing parameters
