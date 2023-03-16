@@ -22,8 +22,8 @@ jobs:
     - name: Install MariaDB and execute SQL file
       run: |
         sudo apt-get install mariadb-server
-        mysql -u root -e "CREATE DATABASE test;"
-        mysql -u root < ./sql.sql
+        sudo mysql -u root -e "CREATE DATABASE test;"
+        sudo mysql -u root < ./sql.sql
 
     - name: Install dependencies and build
       run: |
