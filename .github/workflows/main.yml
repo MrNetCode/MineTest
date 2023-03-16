@@ -16,8 +16,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run nodemon
-        run: npm run nodemon &
+      - name: Compile to TypeScript
+        run: npx tsc
+        
+      - name: Start Server
+        run: npm run start &
 
-      - name: Run Jest
-        run: npm run jest
+      - name: Run Test
+        run: npx jest
