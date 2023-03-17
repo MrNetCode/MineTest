@@ -9,9 +9,14 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    steps:
+  steps:
+        
     - name: Download Repository
       uses: actions/checkout@v2
+      
+    - name: Change to backend
+      run: |
+        cd backend
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
