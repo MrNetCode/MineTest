@@ -26,6 +26,7 @@ jobs:
 
     - name: Install dependencies and build
       run: |
+        cd backend
         npm ci
         npx tsc
 
