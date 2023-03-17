@@ -9,16 +9,21 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
+    
+      - name: Download Repository
+        uses: actions/checkout@v2
+        with:
+         path: backend
+         ref: ${{ github.ref }}
+         
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '19'
           cache: 'npm'
 
-      - name: Download Repository
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
+
+
 
       - name: Install and Configure MariaDB
         run: |
