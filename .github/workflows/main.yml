@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+      
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./my-subdirectory
     steps:
       - name: Download Repository
         uses: actions/checkout@v2
