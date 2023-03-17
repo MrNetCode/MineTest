@@ -23,7 +23,7 @@ describe('Database Connection', () => {
         });
         const data = await response.json();
         expect(response.status).toBe(401);
-        expect(data.message).toEqual("Invalid token");
+        expect(data.message).toEqual("invalid token");
       });
         
     })
