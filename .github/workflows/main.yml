@@ -4,24 +4,21 @@ on:
   push:
     branches:
       - main
-      
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Download Repository
-        uses: actions/checkout@v2
-        with:
-          path: backend
-          ref: ${{ github.ref }}
-
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          path: ./backend
           node-version: '19'
           cache: 'npm'
+
+      - name: Download Repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
 
       - name: Install and Configure MariaDB
         run: |
@@ -30,10 +27,10 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          npm ci
-          npx tsc
+          npm ci --prefix ./backend
+          npx tsc --project ./backend/tsconfig.json
 
       - name: Start the server and run tests
         run: |
-          npm start &
-          npx jest
+          npm start --prefix ./backend &
+          npx jest --config ./backend/jest.config.js
