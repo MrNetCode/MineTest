@@ -9,9 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
       - name: Download Repository
         uses: actions/checkout@v2
@@ -22,6 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
+          path: ./backend
           node-version: '19'
           cache: 'npm'
 
