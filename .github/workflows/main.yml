@@ -8,34 +8,32 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    steps:
+      - name: Download Repository
+        uses: actions/checkout@v2
 
-  steps:
-        
-    - name: Download Repository
-      uses: actions/checkout@v2
-      
-    - name: Change to backend
-      run: |
-        cd backend
+      - name: Change to backend
+        run: |
+          cd backend
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '19'
-        cache: 'npm'
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '19'
+          cache: 'npm'
 
-    - name: Install and Configure MariaDB
-      run: |
-        sudo apt-get install mariadb-server
-        sudo mysql -u root < ./sql.sql
+      - name: Install and Configure MariaDB
+        run: |
+          sudo apt-get install mariadb-server
+          sudo mysql -u root < ./sql.sql
 
-    - name: Install dependencies and build
-      run: |
-        cd backend
-        npm ci
-        npx tsc
+      - name: Install dependencies and build
+        run: |
+          cd backend
+          npm ci
+          npx tsc
 
-    - name: Start the server and run tests
-      run: |
-        npm start &
-        npx jest
+      - name: Start the server and run tests
+        run: |
+          npm start &
+          npx jest
