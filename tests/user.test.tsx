@@ -1,6 +1,6 @@
-import {generateTOTP} from "../functions/generateTOTP"
-import dotenv from "dotenv"
-dotenv.config()
+import { generateTOTP } from "../functions/generateTOTP";
+import dotenv from "dotenv";
+dotenv.config();
 
 describe("Register API Test", () => {
   test("Register with invalid totp code", async () => {
@@ -12,7 +12,7 @@ describe("Register API Test", () => {
     const response = await fetch("http://localhost:5000/api/user/register", {
       method: "POST",
       body: formData,
-    })
+    });
     const data = await response.json();
     expect(response.status).toBe(401);
     expect(data.message).toEqual("Invalid TOTP code");
@@ -48,7 +48,6 @@ describe("Register API Test", () => {
     expect(data.error).toEqual("Illegal Username");
   });
 });
-
 
 describe("Login API Test", () => {
   test("Missing Username or Password", async () => {
@@ -92,4 +91,3 @@ describe("Login API Test", () => {
     expect(data.message).toEqual("Invalid Username or password");
   });
 });
-

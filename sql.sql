@@ -11,6 +11,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+INSERT INTO users (username, password_hash) VALUES('Testuser', '66b532b8105c587bc6dd4a3099d0d92ebb5121cfcca6b1612735b3acc529215d');
+
 CREATE TABLE `tokens` (
   `username` varchar(100) NOT NULL,
   `token` varchar(100) NOT NULL,
@@ -19,6 +21,7 @@ CREATE TABLE `tokens` (
   CONSTRAINT `tokens_FK` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
+INSERT INTO tokens (username, token) VALUES('Testuser', 'testtoken');
 
 CREATE TABLE `tests` (
   `id` char(36) NOT NULL,

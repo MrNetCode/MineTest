@@ -35,7 +35,8 @@ router.post("/", upload.none(), async (request, response) => {
         .send({ message: "missing token or name" });
     }
 
-    // insert the new user into the database
+    //? check the token(get username) from the database
+
     let result: any = await (await connection).query(
       "SELECT username FROM tokens where token = ?",
       [token]
@@ -52,7 +53,7 @@ router.post("/", upload.none(), async (request, response) => {
       [crypto.randomUUID(), name, result[0][0].username]
     );
 
-    // return the token to the client
+    // return the created message
     return response.status(201).send({ message: "Created" });
 
   } catch (error: any) {
