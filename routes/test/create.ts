@@ -22,43 +22,40 @@ const upload = multer();
 // handle POST requests to register new users
 router.post("/", upload.none(), async (request, response) => {
   try {
-
-    if(!request.body){
-      return response.status(400).send({message :"Bad Request"})
+    if (!request.body) {
+      return response.status(400).send({ message: "Bad Request" });
     }
     const { token, name } = request.body;
 
     // check for missing parameters
     if (!token || !name) {
-      return response
-        .status(401)
-        .send({ message: "missing token or name" });
+      return response.status(401).send({ message: "missing token or name" });
     }
 
     //? check the token(get username) from the database
 
-    let result: any = await (await connection).query(
-      "SELECT username FROM tokens where token = ?",
-      [token]
-    );
+    let result: any = await (
+      await connection
+    ).query("SELECT username FROM tokens where token = ?", [token]);
 
-    if(result[0].length === 0){
-        return response.status(401).send({message: "Invalid token"})
-      }
-
+    if (result[0].length === 0) {
+      return response.status(401).send({ message: "Invalid token" });
+    }
 
     // insert the test into the database
-    await (await connection).query(
-      "INSERT INTO tests (id, name, author) VALUES (?,?,?)",
-      [crypto.randomUUID(), name, result[0][0].username]
-    );
+    await (
+      await connection
+    ).query("INSERT INTO tests (id, name, author) VALUES (?,?,?)", [
+      crypto.randomUUID(),
+      name,
+      result[0][0].username,
+    ]);
 
     // return the created message
     return response.status(201).send({ message: "Created" });
-
   } catch (error: any) {
     // handle errors
-    if(error.errno===1062){
+    if (error.errno === 1062) {
       return response.status(409).send({ error: "email or username in use" });
     }
     console.log(error);

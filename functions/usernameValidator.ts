@@ -1,11 +1,11 @@
 // This function validates the username and email using regular expressions
-export function usernameValidator(username: string, email: any = undefined ) {
+export function usernameValidator(username: string, email: any = undefined) {
   // Define a regular expression to check the format of the username
   const usernamePattern = /^[a-zA-Z0-9-_\.]{3,30}$/gm;
-  
+
   // Define a regular expression to check the format of the email address
   const emailRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
   // If username is not provided, return an error code
   if (!username) {

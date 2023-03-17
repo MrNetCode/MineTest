@@ -7,7 +7,7 @@ import multer from "multer";
 
 const router = express.Router();
 
-const upload = multer()
+const upload = multer();
 // enable Cross-Origin Resource Sharing
 router.use(cors());
 
@@ -19,8 +19,8 @@ console.log("Loaded Test Fetch Endpoint");
 // handle GET requests to fetch a test
 router.post("/", upload.none(), async (request, response) => {
   try {
-    if(!request.body){
-      return response.status(400).send({message :"Bad Request"})
+    if (!request.body) {
+      return response.status(400).send({ message: "Bad Request" });
     }
     const { token, testId } = request.body;
 
@@ -30,20 +30,18 @@ router.post("/", upload.none(), async (request, response) => {
     }
 
     // check if token is valid
-    let result: any = await (await connection).query(
-      "SELECT username FROM tokens where token = ?",
-      [token]
-    );
+    let result: any = await (
+      await connection
+    ).query("SELECT username FROM tokens where token = ?", [token]);
 
     if (result[0].length === 0) {
       return response.status(401).send({ message: "Invalid token" });
     }
 
     // fetch the test from the database
-    result = await (await connection).query(
-      "SELECT * FROM tests WHERE id = ?",
-      [testId]
-    );
+    result = await (
+      await connection
+    ).query("SELECT * FROM tests WHERE id = ?", [testId]);
 
     if (result[0].length === 0) {
       return response.status(404).send({ message: "Test not found" });
@@ -58,7 +56,6 @@ router.post("/", upload.none(), async (request, response) => {
 
     // return the test to the client
     return response.status(200).send({ test });
-
   } catch (error: any) {
     // handle errors
     console.log(error);
