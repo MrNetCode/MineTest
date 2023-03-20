@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Register Form</title>
+    <script defer src="./register.js"></script>
+	<link rel="stylesheet" type="text/css" href="./register-style.css">
+</head>
+<body>
+    <div class="container">
+	<h2>Register</h2>
+	<label for="email">Username:</label>
+	<input type="text" id="username" name="username" pattern="/^[a-zA-Z0-9-_\.]{3,30}$/gm"><br>
+	<label for="password">Password:</label>
+	<input type="password" id="password" name="password"><br>
+	<label for="confirm-password">Confirm Password:</label>
+	<input type="password" id="password-confirm" name="password-confirm"><br>
+	<label for="code">Auth Code:</label>
+	<input type="text" id="code" name="code"><br>
+	<input type="submit" id="submit" value="Submit">
+	<div id="error-message" class="error-message"></div>
+</div>
+</body>
+</html>
