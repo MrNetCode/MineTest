@@ -22,21 +22,29 @@ router.post("/", upload.none(), async (request, response) => {
     if (!request.body) {
       return response.status(400).send({ message: "Bad Request" });
     }
-    const { token, testId } = request.body;
-
+    const { token, fetchAll} = request.body;
+    const {testId} = request.body || request.query
+  
     // check for missing parameters
-    if (!token || !testId) {
+    if (!token || (!testId && !fetchAll)) {
       return response.status(400).send({ message: "missing token or testId" });
     }
 
+    
     // check if token is valid
     let result: any = await (
       await connection
-    ).query("SELECT username FROM tokens where token = ?", [token]);
-
-    if (result[0].length === 0) {
-      return response.status(401).send({ message: "Invalid token" });
-    }
+      ).query("SELECT username FROM tokens where token = ?", [token]);
+      
+      if (result[0].length === 0) {
+        return response.status(401).send({ message: "Invalid token" });
+      }
+      if(fetchAll){
+   result = await (
+      await connection
+    ).query("SELECT * FROM tests WHERE owner = ?", [result[0][0].username]);
+    return response.json({data: result[0]});
+      }
 
     // fetch the test from the database
     result = await (
