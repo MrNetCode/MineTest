@@ -13,6 +13,7 @@ router.use(cors());
 
 // import database connection object and helper functions
 import { connection } from "../../functions/DB_Connection";
+import { shiftTestOrderAndSaveToDB } from "../../functions/shiftTest";
 
 console.log("Loaded Test Fetch Endpoint");
 
@@ -22,29 +23,29 @@ router.post("/", upload.none(), async (request, response) => {
     if (!request.body) {
       return response.status(400).send({ message: "Bad Request" });
     }
-    const { token, fetchAll} = request.body;
-    const {testId} = request.body || request.query
-  
+    const { token, fetchAll } = request.body;
+    const { testId } = request.body || request.query;
+
     // check for missing parameters
     if (!token || (!testId && !fetchAll)) {
       return response.status(400).send({ message: "missing token or testId" });
     }
 
-    
     // check if token is valid
     let result: any = await (
       await connection
-      ).query("SELECT username FROM tokens where token = ?", [token]);
-      
-      if (result[0].length === 0) {
-        return response.status(401).send({ message: "Invalid token" });
-      }
-      if(fetchAll){
-   result = await (
-      await connection
-    ).query("SELECT * FROM tests WHERE owner = ?", [result[0][0].username]);
-    return response.json({data: result[0]});
-      }
+    ).query("SELECT username FROM tokens where token = ?", [token]);
+
+    if (result[0].length === 0) {
+      return response.status(401).send({ message: "Invalid token" });
+    }
+
+    if (fetchAll) {
+      result = await (
+        await connection
+      ).query("SELECT * FROM tests WHERE owner = ?", [result[0][0].username]);
+      return response.json({ data: result[0] });
+    }
 
     // fetch the test from the database
     result = await (
@@ -62,8 +63,16 @@ router.post("/", upload.none(), async (request, response) => {
       return response.status(403).send({ message: "Access denied" });
     }
 
+    result = await (
+      await connection
+    ).query("SELECT * FROM questions WHERE test = ? ORDER BY `order` ASC;", [
+      testId,
+    ]);
+    
     // return the test to the client
-    return response.status(200).send({ test });
+    return response
+      .status(200)
+      .send({ test: test, questions: await shiftTestOrderAndSaveToDB(result[0]) });
   } catch (error: any) {
     // handle errors
     console.log(error);
