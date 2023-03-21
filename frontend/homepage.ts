@@ -1,3 +1,6 @@
+if(!localStorage.getItem("token")){
+	window.location.href= "./login.html"
+}
 const table: any = document.getElementById('table-data')
 const formData: any = new FormData();
 formData.append('fetchAll', 'true');

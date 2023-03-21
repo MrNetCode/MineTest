@@ -1,12 +1,13 @@
 // Get the test ID and token from the URL and localStorage respectively
-const urlParams = new URLSearchParams(window.location.search);
-const testId = urlParams.get('testid');
+if(!localStorage.getItem("token")){
+	window.location.href= "./login.html"
+}
+const testId = window.location.hash.slice(1);
 const token = localStorage.getItem('token');
 function main() {
-  
 // Create a FormData object with the test ID and token
 const formData: any = new FormData();
-formData.append('testid', testId);
+formData.append('testId', testId);
 formData.append('token', token);
 
 // Send a POST request to the API endpoint with the FormData
@@ -14,11 +15,30 @@ fetch('http://127.0.0.1:5000/api/test/fetch', {
 	method: 'POST',
 	body: formData
 })
-.then(response => response.json())
+.then(
+	response => {
+		if(response.status === 400){
+			const error_message: any = document.getElementById('error-message');
+			error_message.innerHTML = "Redirecting..."
+			window.location.href = "./homepage.html"
+			return;
+		}
+		if(response.status === 401){
+			const error_message: any = document.getElementById('error-message');
+			error_message.innerHTML = "Access Denied"
+			return;
+		}
+		if(response.status === 404){
+			const error_message: any = document.getElementById('error-message');
+			error_message.innerHTML = "Test Not Found"
+			return;
+		}
+	
+		return response.json()})
 .then(data => {
-  //!FIXME NOT WORKING
 	// Display the test details at the top of the page
 	const testDetailsDiv: any = document.getElementById('test-details');
+  console.log(data)
 	const testDetails = `
 		<h1>${data.test.name}</h1>
 		<p>Owner: ${data.test.owner}</p>

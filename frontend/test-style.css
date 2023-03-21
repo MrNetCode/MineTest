@@ -1,0 +1,27 @@
+body {
+	background-color: #f2f2f2;
+}
+#error-message{
+	font-size: 40px;
+	color: red;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	text-align: center;
+	font-weight: 600;
+}
+
+#question-table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top: 20px;
+}
+
+#question-table th, #question-table td {
+	text-align: left;
+	padding: 8px;
+	border-bottom: 1px solid #ddd;
+}
+
+#question-table th {
+	background-color: #4CAF50;
+	color: white;
+}

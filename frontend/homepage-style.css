@@ -1,13 +1,50 @@
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  padding: 10px;
+/* Set a background color for the whole page */
+body {
+  background-color: #ffffff;
 }
 
-.grid-item {
-  background-color: #f0f0f0;
-  padding: 10px;
-  font-weight: bold;
+/* Style the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+/* Style the table header */
+thead {
+  background-color: #f2f2f2;
+}
+
+/* Style the table header cells */
+th {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Style the table body cells */
+td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Style the table body rows */
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the table body rows on hover */
+tbody tr:hover {
+  background-color: #ddd;
+}
+
+/* Style the page title */
+h1 {
   text-align: center;
+  margin-top: 50px;
+  color: #333;
 }
