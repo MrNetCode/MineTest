@@ -1,5 +1,6 @@
 const form = document.querySelector('.form-container');
 const submitBtn: any = document.getElementById('submit-btn');
+submitBtn.disabled = true
 
 submitBtn.addEventListener('click', async (event: any) => {
   const error_message: any = document.getElementById("error-message")
