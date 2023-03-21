@@ -1,8 +1,8 @@
 const form = document.querySelector('.form-container');
 const submitBtn: any = document.getElementById('submit-btn');
-const error_message: any = document.getElementById("error-message")
 
 submitBtn.addEventListener('click', async (event: any) => {
+  const error_message: any = document.getElementById("error-message")
   event.preventDefault();
 submitBtn.innerHTML = "Loading..."
 submitBtn.disabled = true
