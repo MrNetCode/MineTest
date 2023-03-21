@@ -45,7 +45,7 @@ router.post("/", upload.none(), async (request, response) => {
     // insert the test into the database
     await (
       await connection
-    ).query("INSERT INTO tests (id, name, author) VALUES (?,?,?)", [
+    ).query("INSERT INTO tests (id, name, owner) VALUES (?,?,?)", [
       crypto.randomUUID(),
       name,
       result[0][0].username,
