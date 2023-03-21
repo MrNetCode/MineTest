@@ -3,6 +3,7 @@ const submitBtn: any = document.getElementById('submit-btn');
 
 const username_box: any = document.getElementById('username');
 const password_box: any = document.getElementById('password');
+
 submitBtn.disabled = true
 
 async function inputNotNull() {
