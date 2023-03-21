@@ -74,7 +74,7 @@ describe("Login API Test", () => {
     });
     const data = await response.json();
     expect(response.status).toBe(401);
-    expect(data.error).toEqual("Illegal Username");
+    expect(data.error).toEqual("Username is not valid");
   });
 
   test("Invalid Username or Password", async () => {

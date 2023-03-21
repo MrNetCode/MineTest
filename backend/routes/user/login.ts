@@ -39,7 +39,7 @@ router.post("/", upload.none(), async (request, response) => {
     if (result != 0) {
       return response
         .status(401)
-        .send({ error: "Illegal Username" });
+        .send({ error: "Username is not valid" });
     }
 
     // insert the new user into the database
