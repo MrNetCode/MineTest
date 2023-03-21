@@ -1,7 +1,20 @@
 const form = document.querySelector('.form-container');
 const submitBtn: any = document.getElementById('submit-btn');
 
+const username_box: any = document.getElementById('username');
+const password_box: any = document.getElementById('password');
 submitBtn.disabled = true
+
+async function inputNotNull() {
+  const username: any = document.getElementById('username');
+  const password: any = document.getElementById('password');
+  if(username.value.length != 0 && password.value.length != 0){
+    submitBtn.disabled = false
+  }else{
+    submitBtn.disabled = true
+  }
+}
+
 
 submitBtn.addEventListener('click', async (event: any) => {
   const error_message: any = document.getElementById("error-message")
@@ -32,3 +45,5 @@ window.location.href = "./homepage.html"
   console.log(data.token);
   
 })
+username_box.addEventListener("input", inputNotNull)
+password_box.addEventListener("input", inputNotNull)
