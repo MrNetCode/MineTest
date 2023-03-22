@@ -33,6 +33,9 @@ test("User Register success", async () => {
     expect(response.status).toBe(201);
   });
 
+  setTimeout(() => {
+    
+  }, 100);
   let result = connection.query("SELECT * FROM users")
   console.log(result)
   connection.end()
