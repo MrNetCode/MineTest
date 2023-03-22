@@ -36,7 +36,7 @@ test("User Register success", async () => {
   setTimeout(() => {
     
   }, 100);
-  let result = connection.query("SELECT * FROM users")
+  let result = connection.query("SELECT * FROM `users`")
   console.log(result)
   connection.end()
 
