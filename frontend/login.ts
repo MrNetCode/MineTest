@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     localStorage.setItem("token", data.token);
     window.location.href = "./homepage.html";
-
-    console.log(data.token);
   });
   username.addEventListener("input", inputNotNull);
   password.addEventListener("input", inputNotNull);

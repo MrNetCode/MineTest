@@ -10,8 +10,8 @@ app.use(cors());
 import user_register from "./routes/user/register";
 import rateLimit from "express-rate-limit";
 import user_login from "./routes/user/login";
-// import user-logout from "./routes/";
-// import question-create from "./routes/";
+import user_logout from "./routes/user/logout";
+ import question_create from "./routes/questions/create";
 // import question-edit from "./routes/";
 // import question-delete from "./routes/";
 // import question-fetch from "./routes/";
@@ -32,6 +32,8 @@ app.use(
 
 app.use("/api/test/create", test_create);
 app.use("/api/test/fetch", test_fetch);
+app.use("/api/user/logout", user_logout);
+app.use("/api/question/create", question_create);
 
 app.use(
   "/api/user/login",
