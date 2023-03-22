@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 });
 
 connection.query("DELETE FROM users WHERE username='Test'")
-connection.end()
+
 
 dotenv.config();
 
@@ -33,7 +33,9 @@ test("User Register success", async () => {
     expect(response.status).toBe(201);
   });
 
-setTimeout(function (){} , 100)
+  let result = connection.query("SELECT * FROM users")
+  console.log(result)
+  connection.end()
 
   test("User Login success", async () => {
     const formData: any = new FormData();
