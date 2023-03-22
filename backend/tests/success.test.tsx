@@ -1,5 +1,5 @@
 import { generateTOTP } from "../functions/generateTOTP";
-import mysql from "mysql2"
+import mysql from "mysql2";
 import dotenv from "dotenv";
 
 const connection = mysql.createConnection({
@@ -9,113 +9,104 @@ const connection = mysql.createConnection({
   database: process.env.DB_DEFAULT_SCHEMA || "test", // The name of the default schema/database
 });
 
-connection.query("DELETE FROM users WHERE username='Test'")
-
+// connection.query("DELETE FROM users WHERE username='Test'");
+connection.end();
 
 dotenv.config();
 
-let token: any
-let testId: any
-
+let token: any;
+let testId: any;
 
 test("User Register success", async () => {
-    const formData: any = new FormData();
-    formData.append("username", "Test");
-    formData.append("password", "password");
-    formData.append("code", generateTOTP())
+  const formData: any = new FormData();
+  formData.append("username", "Test");
+  formData.append("password", "password");
+  formData.append("code", generateTOTP());
 
-    const response = await fetch("http://localhost:5000/api/user/register", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    console.log(data)
-    expect(response.status).toBe(201);
+  const response = await fetch("http://localhost:5000/api/user/register", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  console.log(data);
+  expect(response.status).toBe(201);
+});
+
+test("User Login success", async () => {
+  const formData: any = new FormData();
+  formData.append("username", "Test");
+  formData.append("password", "password");
+
+  const response = await fetch("http://localhost:5000/api/user/login", {
+    method: "POST",
+    body: formData,
+  });
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+  token = data.token;
+  expect(response.status).toBe(201);
+});
+
+test("Test Create success", async () => {
+  const formData: any = new FormData();
+  formData.append("token", token);
+  formData.append("name", "Test1");
+
+  const response = await fetch("http://localhost:5000/api/test/create", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  testId = data.testId;
+  expect(response.status).toBe(201);
+});
+
+test("Question Create success", async () => {
+  const formData: any = new FormData();
+  formData.append("token", token);
+  formData.append("type", "true-false");
+  formData.append("question", "This is a question(true-false)");
+  formData.append("testId", testId);
+  formData.append("correctAnswer", "1");
+
+  const response = await fetch("http://localhost:5000/api/question/create", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  expect(response.status).toBe(201);
+});
+
+test("Question Create text", async () => {
+  const formData: any = new FormData();
+  formData.append("token", token);
+  formData.append("type", "text");
+  formData.append("question", "This is a question(true-false)");
+  formData.append("testId", testId);
+  formData.append("correctAnswer", "1");
+
+  const response = await fetch("http://localhost:5000/api/question/create", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  expect(response.status).toBe(201);
+});
+
+test("Question Create true-false", async () => {
+  const formData: any = new FormData();
+  formData.append("token", token);
+  formData.append("type", "true-false");
+  formData.append("question", "This is a question(true-false)");
+  formData.append("testId", testId);
+  formData.append("correctAnswer", "1");
+
+  const response = await fetch("http://localhost:5000/api/question/create", {
+    method: "POST",
+    body: formData,
   });
 
-  setTimeout(() => {
-    
-  }, 100);
-  let result = connection.query("SELECT * FROM `users`")
-  console.log(result)
-  connection.end()
-
-  test("User Login success", async () => {
-    const formData: any = new FormData();
-    formData.append("username", "Test");
-    formData.append("password", "password");
-
-    const response = await fetch("http://localhost:5000/api/user/login", {
-      method: "POST",
-      body: formData,
-    });
-    console.log(response)
-    const data = await response.json();
-    console.log(data)
-    token = data.token
-    expect(response.status).toBe(201);
-  });
-
-  test("Test Create success", async () => {
-    const formData: any = new FormData();
-    formData.append("token", token);
-    formData.append("name", "Test1");
-
-    const response = await fetch("http://localhost:5000/api/test/create", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    testId = data.testId
-    expect(response.status).toBe(201);
-  });
-
-  test("Question Create success", async () => {
-    const formData: any = new FormData();
-    formData.append("token", token);
-    formData.append("type", "true-false");
-    formData.append("question", "This is a question(true-false)")
-    formData.append("testId", testId)
-    formData.append("correctAnswer", "1")
-
-    const response = await fetch("http://localhost:5000/api/question/create", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    expect(response.status).toBe(201);
-  });
-
-  test("Question Create text", async () => {
-    const formData: any = new FormData();
-    formData.append("token", token);
-    formData.append("type", "text");
-    formData.append("question", "This is a question(true-false)")
-    formData.append("testId", testId)
-    formData.append("correctAnswer", "1")
-
-    const response = await fetch("http://localhost:5000/api/question/create", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    expect(response.status).toBe(201);
-  });
-
-  test("Question Create true-false", async () => {
-    const formData: any = new FormData();
-    formData.append("token", token);
-    formData.append("type", "true-false");
-    formData.append("question", "This is a question(true-false)")
-    formData.append("testId", testId)
-    formData.append("correctAnswer", "1")
-
-    const response = await fetch("http://localhost:5000/api/question/create", {
-      method: "POST",
-      body: formData,
-    });
-  
-    const data = await response.json();
-    expect(response.status).toBe(201);
-  });
-
+  const data = await response.json();
+  expect(response.status).toBe(201);
+});
