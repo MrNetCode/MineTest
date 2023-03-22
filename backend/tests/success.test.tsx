@@ -28,6 +28,8 @@ test("User Register success", async () => {
       method: "POST",
       body: formData,
     });
+    const data = await response.json();
+    console.log(data)
     expect(response.status).toBe(201);
   });
 
@@ -42,6 +44,7 @@ test("User Register success", async () => {
     });
     console.log(response)
     const data = await response.json();
+    console.log(data)
     token = data.token
     expect(response.status).toBe(201);
   });
