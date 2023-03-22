@@ -40,6 +40,7 @@ test("User Register success", async () => {
       method: "POST",
       body: formData,
     });
+    console.log(response)
     const data = await response.json();
     token = data.token
     expect(response.status).toBe(201);
