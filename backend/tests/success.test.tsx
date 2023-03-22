@@ -33,6 +33,8 @@ test("User Register success", async () => {
     expect(response.status).toBe(201);
   });
 
+setTimeout(function (){} , 100)
+
   test("User Login success", async () => {
     const formData: any = new FormData();
     formData.append("username", "Test");
