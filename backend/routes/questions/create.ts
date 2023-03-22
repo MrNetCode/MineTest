@@ -46,7 +46,7 @@ router.post("/", upload.none(), async (request, response) => {
       type,
       question
     ]);
-
+      
 
     // insert multi-choice or true-false question into database, if applicable
     if (type === "multi" && choice1 && choice2) {
@@ -54,10 +54,10 @@ router.post("/", upload.none(), async (request, response) => {
         "INSERT INTO multi_choice (id, choice1, choice2, choice3, choice4, choice5, correct) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [questionId, choice1, choice2, choice3, choice4, choice5, correctAnswer]
       );
-    } else if (type === "true-false" && typeof correctAnswer === "boolean") {
+    } else if (type === "true-false" && correctAnswer === "1" || "0") {
       await (await connection).query(
-        "INSERT INTO true_false (id, question_id, text, answer) VALUES (?, ?, ?, ?)",
-        [crypto.randomUUID(), questionId, question, correctAnswer]
+        "INSERT INTO true_false (id, text, answer) VALUES (?, ?, ?)",
+        [questionId, question, correctAnswer]
       );
     } else {
       return response.status(401).send({ message: "Invalid type or missing parameters" });
