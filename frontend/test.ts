@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const testId = window.location.hash.slice(1);
-  if(!testId){
-    window.location.href = "./homepage.html"
+  if (!testId) {
+    window.location.href = "./homepage.html";
   }
   const token = localStorage.getItem("token");
 
@@ -15,39 +15,91 @@ document.addEventListener("DOMContentLoaded", async function () {
     formData.append("testId", testId);
     formData.append("token", token);
 
-    const response = await fetch("http://127.0.0.1:5000/api/test/fetch", {
+    const response = await fetch("http://127.0.0.1:5000/api/question/fetch", {
       method: "POST",
       body: formData,
     });
 
-    if(response.status != 200){
-      window.location.href = "./homepage.html"
+    if (response.status != 200) {
+      window.location.href = "./homepage.html";
     }
     const data = await response.json();
-
-    const testDetailsDiv: any = document.getElementById("test-details");
     console.log(data);
-    const testDetails = `
-	<h1>${data.test.name}</h1>
-	<p>Owner: ${data.test.owner}</p>
-	<p>State: ${data.test.state}</p>
-`;
-    testDetailsDiv.innerHTML = testDetails;
+    const testDetailsDiv: any = document.getElementById("test-details");
+    // Parse data here
+    data.question.forEach((question: any) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.classList.add("question");
 
-    // Display the questions in a table
-    const questionList: any = document.getElementById("question-list");
-    const questions = data.questions;
-    for (let i = 0; i < questions.length; i++) {
-      const question = questions[i];
-      const questionRow = `
-		<tr>
-			<td>${question.order}</td>
-			<td>${question.type}</td>
-		</tr>
-	`;
-      questionList.innerHTML += questionRow;
-    }
-  } catch (error: any) {
-    console.error(`Fetch failed: ${error.message}`);
+      const questionText = document.createElement("p");
+      questionText.innerText = question.text;
+      questionDiv.appendChild(questionText);
+
+      if (question.type === "text") {
+        const answerInput = document.createElement("input");
+        answerInput.type = "text";
+        questionDiv.appendChild(answerInput);
+      } else if (question.type === "true-false") {
+        const trueLabel = document.createElement("label");
+        const trueRadio = document.createElement("input");
+        trueRadio.type = "radio";
+        trueRadio.name = question.id;
+        trueRadio.value = "true";
+        trueLabel.appendChild(trueRadio);
+        trueLabel.appendChild(document.createTextNode("True"));
+        questionDiv.appendChild(trueLabel);
+
+        const falseLabel = document.createElement("label");
+        const falseRadio = document.createElement("input");
+        falseRadio.type = "radio";
+        falseRadio.name = question.id;
+        falseRadio.value = "false";
+        falseLabel.appendChild(falseRadio);
+        falseLabel.appendChild(document.createTextNode("False"));
+        questionDiv.appendChild(falseLabel);
+      } else if (question.type === "multi") {
+        const choice1Label = document.createElement("label");
+        const choice1Radio = document.createElement("input");
+        choice1Radio.type = "radio";
+        choice1Radio.name = question.id;
+        choice1Radio.value = "1";
+        choice1Label.appendChild(choice1Radio);
+        choice1Label.appendChild(document.createTextNode(question.choice1));
+        questionDiv.appendChild(choice1Label);
+
+        const choice2Label = document.createElement("label");
+        const choice2Radio = document.createElement("input");
+        choice2Radio.type = "radio";
+        choice2Radio.name = question.id;
+        choice2Radio.value = "2";
+        choice2Label.appendChild(choice2Radio);
+        choice2Label.appendChild(document.createTextNode(question.choice2));
+        questionDiv.appendChild(choice2Label);
+
+        const choice3Label = document.createElement("label");
+        const choice3Radio = document.createElement("input");
+        choice3Radio.type = "radio";
+        choice3Radio.name = question.id;
+        choice3Radio.value = "3";
+        choice3Label.appendChild(choice3Radio);
+        choice3Label.appendChild(document.createTextNode(question.choice3));
+        questionDiv.appendChild(choice3Label);
+
+        if (question.choice4) {
+          const choice4Label = document.createElement("label");
+          const choice4Radio = document.createElement("input");
+          choice4Radio.type = "radio";
+          choice4Radio.name = question.id;
+          choice4Radio.value = "4";
+          choice4Label.appendChild(choice4Radio);
+          choice4Label.appendChild(document.createTextNode(question.choice4));
+          questionDiv.appendChild(choice4Label);
+        }
+      }
+
+      testDetailsDiv.appendChild(questionDiv);
+    });
+  } catch (error) {
+    console.log(error);
   }
 });
