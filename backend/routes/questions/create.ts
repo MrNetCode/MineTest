@@ -37,11 +37,21 @@ router.post("/", upload.none(), async (request, response) => {
       return response.status(401).send({ message: "Invalid token" });
     }
 
+    const maxOrderNumberResult: any = await (await connection).query("SELECT MAX(`order`) AS max_order_number FROM questions WHERE `test` = ?", [testId]);
+    let orderNumber = 1;
+
+    console.log(orderNumber, maxOrderNumberResult[0])
+
+    if (maxOrderNumberResult[0].length > 0) {
+      orderNumber = maxOrderNumberResult[0][0].max_order_number + 1;
+    }
+console.log(orderNumber)
     // insert question into database
     const questionId = crypto.randomUUID();
 
-    await (await connection).query("INSERT INTO questions (id, test, type, text) VALUES (?, ?, ?, ?)", [
+    await (await connection).query("INSERT INTO questions (id, `order`, test, type, text) VALUES (?, ?, ?, ?, ?)", [
       questionId,
+      orderNumber,
       testId,
       type,
       question

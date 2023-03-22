@@ -1,14 +1,22 @@
 import { generateTOTP } from "../functions/generateTOTP";
-import { connection } from "../functions/DB_Connection"
+import mysql from "mysql2"
 import dotenv from "dotenv";
+
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST || "127.0.0.1", // The host name of the database server
+  user: process.env.DB_USER || "root", // The database user's username
+  password: process.env.DB_PASS || "password", // The database user's password
+  database: process.env.DB_DEFAULT_SCHEMA || "test", // The name of the default schema/database
+});
+
+connection.query("DELETE FROM users WHERE username='Test'")
+connection.end()
+
 dotenv.config();
 
 let token: any
 let testId: any
 
-beforeAll(async () => {
-await (await connection).query("DELETE FROM users WHERE username='Test'")
-})
 
 test("User Register success", async () => {
     const formData: any = new FormData();
@@ -95,6 +103,8 @@ test("User Register success", async () => {
       method: "POST",
       body: formData,
     });
+  
     const data = await response.json();
     expect(response.status).toBe(201);
   });
+
