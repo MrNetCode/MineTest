@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   database: process.env.DB_DEFAULT_SCHEMA || "test", // The name of the default schema/database
 });
 
-// connection.query("DELETE FROM users WHERE username='Test'");
+connection.query("DELETE FROM users WHERE username='Test'");
 connection.end();
 
 dotenv.config();
