@@ -63,7 +63,7 @@ router.post("/", upload.none(), async (request, response) => {
       return response.status(401).send({ message: "Invalid type or missing parameters" });
     }
 
-    return response.status(200).send({ message: "Question created successfully" });
+    return response.status(201).send({ message: "Question created successfully" });
   } catch (error) {
     console.log(error);
     return response.status(500).send({ error: "Internal server error" });

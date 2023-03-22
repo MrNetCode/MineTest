@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   const testId = window.location.hash.slice(1);
+  if(!testId){
+    window.location.href = "./homepage.html"
+  }
   const token = localStorage.getItem("token");
 
   try {
@@ -17,6 +20,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       body: formData,
     });
 
+    if(response.status != 200){
+      window.location.href = "./homepage.html"
+    }
     const data = await response.json();
 
     const testDetailsDiv: any = document.getElementById("test-details");

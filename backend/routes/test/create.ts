@@ -42,17 +42,18 @@ router.post("/", upload.none(), async (request, response) => {
       return response.status(401).send({ message: "Invalid token" });
     }
 
+    let testId = crypto.randomUUID()
     // insert the test into the database
     await (
       await connection
     ).query("INSERT INTO tests (id, name, owner) VALUES (?,?,?)", [
-      crypto.randomUUID(),
+     testId,
       name,
       result[0][0].username,
     ]);
 
     // return the created message
-    return response.status(201).send({ message: "Created" });
+    return response.status(201).send({ message: "Created", "testId": testId});
   } catch (error: any) {
     // handle errors
     if (error.errno === 1062) {
