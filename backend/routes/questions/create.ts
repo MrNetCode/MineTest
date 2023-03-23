@@ -57,7 +57,7 @@ router.post("/", upload.none(), async (request, response) => {
       
 
     // insert multi-choice or true-false question into database, if applicable
-    if (type === "multi" && choice1 && choice2) {
+    if (type === "multi" && choice1 && choice2 && correctAnswer) {
       await (await connection).query(
         "INSERT INTO multi_choice (id, choice1, choice2, choice3, choice4, choice5, correct) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [questionId, choice1, choice2, choice3, choice4, choice5, correctAnswer]
