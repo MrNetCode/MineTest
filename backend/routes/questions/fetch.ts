@@ -26,12 +26,13 @@ router.post("/", upload.none(), async (request, response) => {
     return response.status(401).send({message :"Missing testId"})
   }
       const result: any = await (await connection).query(`
-        SELECT q.id, q.type, q.text, mc.choice1, mc.choice2, mc.choice3, mc.choice4, mc.choice5, mc.correct AS correctAnswer, tf.answer AS correctAnswer
-        FROM questions q
-        LEFT JOIN multi_choice mc ON q.id = mc.id
-        LEFT JOIN true_false tf ON q.id = tf.id
-        WHERE q.test = ?
-      `, [testId]);
+      SELECT q.id, q.type, q.text, mc.choice1, mc.choice2, mc.choice3, mc.choice4, mc.choice5, 
+    CASE WHEN q.type = 'true-false' THEN tf.correct ELSE mc.correct END AS correctAnswer
+FROM questions q
+LEFT JOIN multi_choice mc ON q.id = mc.id
+LEFT JOIN true_false tf ON q.id = tf.id
+WHERE q.test = ?
+`, [testId]);
   
       const questions = result[0];
       return response.status(200).send({ "question": questions });
