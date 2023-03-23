@@ -27,7 +27,11 @@ router.post("/", upload.none(), async (request, response) => {
     const { testId } = request.body || request.query;
     // check for missing parameters
     if (!token || (!testId && !fetchAll)) {
-      return response.status(400).send({ message: "missing token or testId" });
+      let missingParams  = [];
+        if (!token) missingParams.push('token');
+        if (!testId) missingParams.push('testId');
+        if (!fetchAll) missingParams.push('fetchAll');
+        return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
     }
 
     // check if token is valid

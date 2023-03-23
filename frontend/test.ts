@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         choice2Label.appendChild(choice2Radio);
         choice2Label.appendChild(document.createTextNode(question.choice2));
         questionDiv.appendChild(choice2Label);
-      
+      if(question.choice3){
         const choice3Label = document.createElement("label");
         const choice3Radio = document.createElement("input");
         choice3Radio.type = "radio";
@@ -96,10 +96,11 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (question.correctAnswer === 3) {
           choice3Radio.checked = true;
         }
+      
         choice3Label.appendChild(choice3Radio);
         choice3Label.appendChild(document.createTextNode(question.choice3));
         questionDiv.appendChild(choice3Label);
-      
+      }
         if (question.choice4) {
           const choice4Label = document.createElement("label");
           const choice4Radio = document.createElement("input");
