@@ -34,9 +34,11 @@ router.post("/", upload.none(), async (request, response) => {
 
     // check for missing parameters
     if (!username || !password || !code) {
-      return response
-        .status(401)
-        .send({ message: "missing username, code or password" });
+      let missingParams  = [];
+        if (!username) missingParams.push('username');
+        if (!password) missingParams.push('password');
+        if (!code) missingParams.push('code');
+        return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
     }
 
     // verify the TOTP code

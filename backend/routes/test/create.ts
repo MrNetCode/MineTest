@@ -29,7 +29,10 @@ router.post("/", upload.none(), async (request, response) => {
 
     // check for missing parameters
     if (!token || !name) {
-      return response.status(401).send({ message: "missing token or name" });
+      let missingParams  = [];
+        if (!token) missingParams.push('token');
+        if (!name) missingParams.push('name');
+        return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
     }
 
     //? check the token(get username) from the database
