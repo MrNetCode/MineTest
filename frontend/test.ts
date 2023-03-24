@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", async function () {
+  const createQuestionForm: any = document.getElementById("create-question-form")
+createQuestionForm.reset();
+
+
   if (!localStorage.getItem("token")) {
     window.location.href = "./login.html";
   }
@@ -144,10 +148,13 @@ questionTypeSelect.addEventListener('change', function() {
     trueFalseAnswers.classList.add('hidden');
     multiChoiceAnswers.classList.remove('hidden');
   }
+
+
 });
 
 
 const createQuestionForm: any = document.getElementById("create-question-form");
+
 createQuestionForm.addEventListener("submit", async (event: any) => {
   event.preventDefault();
 
@@ -185,10 +192,10 @@ createQuestionForm.addEventListener("submit", async (event: any) => {
     formData.append("type", "multi");
     formData.append("choice1", choice1);
     formData.append("choice2", choice2);
-    formData.append("correctAnswer", correctAnswer);
     if (choice3) formData.append("choice3", choice3);
     if (choice4) formData.append("choice4", choice4);
     if (choice5) formData.append("choice5", choice5);
+    formData.append("correctAnswer", correctAnswer);
   } else if (questionType === "true-false") {
     //@ts-ignore
     const correctAnswer: any = document.getElementById("correct-answer-input-tf").value;
