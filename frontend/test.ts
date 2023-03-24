@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       window.location.href = "./homepage.html";
     }
     const data = await response.json();
-    console.log(data)
+    console.log(data);
 
     const testDetailsDiv: any = document.getElementById("test-details");
     data.question.forEach((question: any) => {
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         falseRadio.type = "radio";
         falseRadio.name = question.id;
         falseRadio.value = "false";
-        if (question.correctAnswer === 1) {
+        if (question.correctAnswer === 0) {
           falseRadio.checked = true;
         }
         falseLabel.appendChild(falseRadio);
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         choice1Label.appendChild(choice1Radio);
         choice1Label.appendChild(document.createTextNode(question.choice1));
         questionDiv.appendChild(choice1Label);
-      
+
         const choice2Label = document.createElement("label");
         const choice2Radio = document.createElement("input");
         choice2Radio.type = "radio";
@@ -87,20 +87,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         choice2Label.appendChild(choice2Radio);
         choice2Label.appendChild(document.createTextNode(question.choice2));
         questionDiv.appendChild(choice2Label);
-      if(question.choice3){
-        const choice3Label = document.createElement("label");
-        const choice3Radio = document.createElement("input");
-        choice3Radio.type = "radio";
-        choice3Radio.name = question.id;
-        choice3Radio.value = "3";
-        if (question.correctAnswer === 3) {
-          choice3Radio.checked = true;
+        if (question.choice3) {
+          const choice3Label = document.createElement("label");
+          const choice3Radio = document.createElement("input");
+          choice3Radio.type = "radio";
+          choice3Radio.name = question.id;
+          choice3Radio.value = "3";
+          if (question.correctAnswer === 3) {
+            choice3Radio.checked = true;
+          }
+
+          choice3Label.appendChild(choice3Radio);
+          choice3Label.appendChild(document.createTextNode(question.choice3));
+          questionDiv.appendChild(choice3Label);
         }
-      
-        choice3Label.appendChild(choice3Radio);
-        choice3Label.appendChild(document.createTextNode(question.choice3));
-        questionDiv.appendChild(choice3Label);
-      }
         if (question.choice4) {
           const choice4Label = document.createElement("label");
           const choice4Radio = document.createElement("input");
@@ -114,11 +114,98 @@ document.addEventListener("DOMContentLoaded", async function () {
           choice4Label.appendChild(document.createTextNode(question.choice4));
           questionDiv.appendChild(choice4Label);
         }
-      }      
+      }
 
       testDetailsDiv.appendChild(questionDiv);
     });
   } catch (error) {
     console.log(error);
+  }
+});
+
+// Get the elements
+const questionTypeSelect: any = document.getElementById('question-type-select');
+const trueFalseAnswers: any = document.getElementById('true-false-answers');
+const multiChoiceAnswers: any = document.getElementById('multi-choice-answers');
+
+// Add an event listener to the question type select element
+questionTypeSelect.addEventListener('change', function() {
+  // Check the value of the select element
+  if (questionTypeSelect.value === 'text') {
+    // If it's "text", hide the true/false and multi-choice answer fields
+    trueFalseAnswers.classList.add('hidden');
+    multiChoiceAnswers.classList.add('hidden');
+  } else if (questionTypeSelect.value === 'true-false') {
+    // If it's "true-false", show the true/false answer field and hide the multi-choice answer field
+    trueFalseAnswers.classList.remove('hidden');
+    multiChoiceAnswers.classList.add('hidden');
+  } else if (questionTypeSelect.value === 'multi') {
+    // If it's "multi", show the multi-choice answer field and hide the true/false answer field
+    trueFalseAnswers.classList.add('hidden');
+    multiChoiceAnswers.classList.remove('hidden');
+  }
+});
+
+
+const createQuestionForm: any = document.getElementById("create-question-form");
+createQuestionForm.addEventListener("submit", async (event: any) => {
+  event.preventDefault();
+
+  // Get the test ID and token from the page URL and local storage
+  const testId:any = window.location.hash.slice(1);
+  const token:any = localStorage.getItem("token");
+
+  // Get the question data from the form
+  //@ts-ignore
+  const questionText: any = document.getElementById("question-text-input").value; 
+  //@ts-ignore
+  const questionType: any = document.getElementById("question-type-select").value;
+  //@ts-ignore
+  const choice1 = document.getElementById("choice1-input").value;
+  //@ts-ignore
+  const choice2 = document.getElementById("choice2-input").value;
+  //@ts-ignore
+  const choice3 = document.getElementById("choice3-input").value;
+  //@ts-ignore
+  const choice4 = document.getElementById("choice4-input").value;
+  //@ts-ignore
+  const choice5 = document.getElementById("choice5-input").value;
+
+  // Create a FormData object with the question data, test ID, and token
+  const formData: any = new FormData();
+  formData.append("testId", testId);
+  formData.append("token", token);
+  formData.append("question", questionText);
+
+  if (questionType === "text") {
+    formData.append("type", "text");
+  } else if (questionType === "multi") {
+    //@ts-ignore
+    const correctAnswer: any = document.getElementById("correct-answer-input-mc").value;
+    formData.append("type", "multi");
+    formData.append("choice1", choice1);
+    formData.append("choice2", choice2);
+    formData.append("correctAnswer", correctAnswer);
+    if (choice3) formData.append("choice3", choice3);
+    if (choice4) formData.append("choice4", choice4);
+    if (choice5) formData.append("choice5", choice5);
+  } else if (questionType === "true-false") {
+    //@ts-ignore
+    const correctAnswer: any = document.getElementById("correct-answer-input-tf").value;
+    formData.append("type", "true-false");
+    formData.append("correctAnswer", correctAnswer);
+  }
+
+  // Send a POST request to create the question
+  const response = await fetch("http://127.0.0.1:5000/api/question/create", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (response.ok) {
+    // Question successfully created, redirect to the test page
+    window.location.reload()
+  } else {
+    throw new Error("Failed to create question.");
   }
 });

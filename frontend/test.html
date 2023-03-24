@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="./test-style.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Page</title>
   </head>
   <body>
     <div id="test-details"></div>
-    <button id="add-question">Add Question</button>
+    <form id="create-question-form">
+      <label for="question-text-input">Question Text:</label>
+      <input type="text" id="question-text-input" required><br>
+    
+      <label for="question-type-select">Question Type:</label>
+      <select id="question-type-select" required>
+        <option value="">Select a question type</option>
+        <option value="text">Text</option>
+        <option value="true-false">True/False</option>
+        <option value="multi">Multiple Choice</option>
+      </select><br>
+    
+      <div id="true-false-answers" class="hidden">
+        <label for="correct-answer-input">Correct Answer:</label>
+        <select id="correct-answer-input-tf" required>
+          <option value="">Select an answer</option>
+          <option value="1">True</option>
+          <option value="0">False</option>
+        </select><br>
+      </div>
+    
+      <div id="multi-choice-answers" class="hidden">
+        <label for="correct-answer-input">Correct Answer:</label>
+        <select id="correct-answer-input-mc" required>
+          <option value="">Select an answer</option>
+          <option value="1">Choice 1</option>
+          <option value="2">Choice 2</option>
+          <option value="3">Choice 3</option>
+          <option value="4">Choice 4</option>
+          <option value="5">Choice 5</option>
+        </select><br>
+    
+        <label for="choice1-input">Choice 1:</label>
+        <input type="text" id="choice1-input" required><br>
+    
+        <label for="choice2-input">Choice 2:</label>
+        <input type="text" id="choice2-input" required><br>
+    
+        <label for="choice3-input">Choice 3:</label>
+        <input type="text" id="choice3-input"><br>
+    
+        <label for="choice4-input">Choice 4:</label>
+        <input type="text" id="choice4-input"><br>
+
+        <label for="choice5-input">Choice 5:</label>
+        <input type="text" id="choice5-input"><br>
+      </div>
+    
+      <button type="submit">Create Question</button>
+    </form>
 
     <script src="./test.js"></script>
   </body>

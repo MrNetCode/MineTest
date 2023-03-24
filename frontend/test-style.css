@@ -1,27 +1,59 @@
-body {
-	background-color: #f2f2f2;
-}
-#error-message{
-	font-size: 40px;
-	color: red;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	text-align: center;
-	font-weight: 600;
-}
-
-#question-table {
-	border-collapse: collapse;
-	width: 100%;
+.question {
+	margin-bottom: 20px;
+  }
+  
+  .question p {
+	font-weight: bold;
+	margin-bottom: 10px;
+  }
+  
+  .question label {
+	display: block;
+	margin-bottom: 5px;
+  }
+  
+  .question input[type="radio"] {
+	margin-right: 5px;
+  }
+form {
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+  }
+  
+  label {
+	margin-top: 10px;
+  }
+  
+  input[type="text"],
+  select {
+	margin-bottom: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+  }
+  
+  button[type="submit"] {
 	margin-top: 20px;
-}
-
-#question-table th, #question-table td {
-	text-align: left;
-	padding: 8px;
-	border-bottom: 1px solid #ddd;
-}
-
-#question-table th {
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
 	background-color: #4CAF50;
 	color: white;
-}
+	font-size: 16px;
+	cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+	background-color: #3e8e41;
+  }
+  
+  .hidden {
+	display: none;
+  }
+  
