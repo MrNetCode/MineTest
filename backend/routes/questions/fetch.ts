@@ -34,10 +34,6 @@ LEFT JOIN true_false tf ON q.id = tf.id
 WHERE q.test = ? ORDER BY q.order;
 `, [testId]);
 
-console.log(result[0])
-  if(result[0].length===0){
-return response.status(404).send({message:"Not Found"})
-  }
       const questions = result[0];
       return response.status(200).send({ "question": questions });
     } catch (error) {
