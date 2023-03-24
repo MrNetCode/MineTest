@@ -17,6 +17,7 @@
 }
 
 form {
+	width: 400px;
   display: flex;
   flex-direction: column;
   margin: 20px;
@@ -53,6 +54,15 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #3e8e41;
 }
+
+button[type="submit"]:disabled {
+	background-color: #bdbdbd;
+  }
+
+
+  button[type="submit"]:hover:disabled {
+	background-color: #9b9b9b;
+  }
 
 .hidden {
   display: none;
