@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 createQuestionForm.reset();
 
 
+// Add an event listener to each radial input element
+
+
   if (!localStorage.getItem("token")) {
     window.location.href = "./login.html";
   }
