@@ -125,7 +125,46 @@ createQuestionForm.reset();
   } catch (error) {
     console.log(error);
   }
+
+  const questionTextInput:any = document.getElementById("question-text-input");
+  const correctAnswerInputTf:any = document.getElementById("correct-answer-input-tf");
+  const correctAnswerInputMc = document.getElementById("correct-answer-input-mc");
+  const choice1Input = document.getElementById("choice1-input");
+  const choice2Input = document.getElementById("choice2-input");
+  
+  createQuestionForm.addEventListener("change", () => {
+    let isValid = true;
+  
+    // Check if question text has a value
+    if (questionTextInput.value === "") {
+      isValid = false;
+    }
+  
+    // Check if question type has a value
+    if (questionTypeSelect.value === "") {
+      isValid = false;
+    } else if (questionTypeSelect.value === "true-false") {
+      // Check if true/false question has a valid answer
+      if (correctAnswerInputTf.value === "") {
+        isValid = false;
+      }
+    } else if (questionTypeSelect.value === "multi") {
+      // Check if multiple choice question has a valid answer and at least two choices
+      if (correctAnswerInputMc.value === "") {
+        isValid = false;
+      }
+      if (choice1Input.value === "" || choice2Input.value === "") {
+        isValid = false;
+      }
+    }
+  
+    // Enable/disable submit button based on validity
+    const submitButton = createQuestionForm.querySelector("button[type='submit']");
+    console.log(isValid)
+    submitButton.disabled = !isValid;
+  });
 });
+
 
 // Get the elements
 const questionTypeSelect: any = document.getElementById('question-type-select');
