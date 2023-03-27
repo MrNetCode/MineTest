@@ -36,7 +36,7 @@ router.put("/", upload.none(), async (request, response) => {
       }
   
       // check the token against the database
-      const result: any = await (await connection).query("SELECT username FROM tokens WHERE token = ?", [token]);
+      let result: any = await (await connection).query("SELECT username FROM tokens WHERE token = ?", [token]);
 
       console.log(result[0][0].username)
 
@@ -51,7 +51,23 @@ router.put("/", upload.none(), async (request, response) => {
         return response.status(401).send({message: "You don't have permission to modify this item"})
       }
 //TODO: Fix this(not working)
-      await (await connection).query("UPDATE CASE WHEN Questions.type = 'multi' THEN multi_choice WHEN Questions.type = 'true-false' THEN true_false ELSE NULL END AS answer_table SET answer_table.correctAnswer = ? FROM Questions LEFT JOIN Multi_choice ON Questions.id = Multi_choice.id LEFT JOIN True_false ON Questions.id = True_false.id WHERE Questions.id = ?;", [correctAnswer, questionId]);
+      result = await (await connection).query("SELECT type FROM questions WHERE id=?", [questionId]);
+
+      console.log(result[0][0].type)
+
+      if(result[0][0].type="true-false") {
+        if(correctAnswer!=0 && correctAnswer!=1){
+          return response.status(400).send({message:"Bad correctAnswer value(must be 1 or 0)"})
+        }
+        await (await connection).query(`UPDATE 
+        true_false 
+        JOIN questions ON true_false.id = questions.id 
+      SET 
+        true_false.correct = ?
+      WHERE 
+        questions.id = ?
+        AND questions.type = 'true-false';`, [correctAnswer, questionId])
+      }
 
       response.send({"message":"Updated Succesfully"})
 
