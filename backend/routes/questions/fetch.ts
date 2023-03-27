@@ -7,7 +7,7 @@ import multer from "multer";
 dotenv.config();
 const router = express.Router();
 
-console.log("Loaded Question Create Endpoint")
+console.log("Loaded Question Fetch Endpoint")
 
 // enable Cross-Origin Resource Sharing
 router.use(cors());

@@ -82,7 +82,7 @@ router.post("/", upload.none(), async (request, response) => {
         question
       ]);
       await (await connection).query(
-        "INSERT INTO true_false (id, text, correct) VALUES (?, ?, ?)",
+        "INSERT INTO true_false (id, text, correctAnswer) VALUES (?, ?, ?)",
         [questionId, question, correctAnswer]
       );
     } else if (type === "text") {
