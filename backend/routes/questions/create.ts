@@ -35,7 +35,10 @@ router.post("/", upload.none(), async (request, response) => {
       return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
     }
     
-
+    if(correctAnswer.length != 1 || typeof correctAnswer !== "number" || isNaN(correctAnswer)){
+      return response.status(400).send({"massage":"correctAnswer must be an integer"})
+    }
+    
     // check the token against the database
     const result: any = await (await connection).query("SELECT username FROM tokens WHERE token = ?", [token]);
 
