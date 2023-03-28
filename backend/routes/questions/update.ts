@@ -34,7 +34,7 @@ router.put("/", upload.none(), async (request, response) => {
         return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
       }
 
-      if(correctAnswer.length != 1 || !/^[0-9]+$/.test(correctAnswer)){
+      if(correctAnswer.length != 1 || !/^[1-5]+$/.test(correctAnswer)){
         return response.status(400).send({"massage":"correctAnswer must be an integer"})
       }
   
@@ -68,9 +68,6 @@ router.put("/", upload.none(), async (request, response) => {
         questions.id = ?
         AND questions.type = 'true-false';`, [correctAnswer, questionId])
       } else if (result[0][0].type==="multi") {
-        if(correctAnswer <= 0 || correctAnswer >= 6){
-          return response.status(400).send({message:"Bad correctAnswer value(must be between 1 and 5)"})
-        }
         await (await connection).query(`UPDATE 
         multi_choice 
         JOIN questions ON multi_choice.id = questions.id 
