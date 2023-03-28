@@ -51,7 +51,7 @@ createQuestionForm.reset();
         const trueRadio = document.createElement("input");
         trueRadio.type = "radio";
         trueRadio.name = question.id;
-        trueRadio.value = "true";
+        trueRadio.value = "1";
         if (question.correctAnswer === 1) {
           trueRadio.checked = true;
         }
@@ -63,7 +63,7 @@ createQuestionForm.reset();
         const falseRadio = document.createElement("input");
         falseRadio.type = "radio";
         falseRadio.name = question.id;
-        falseRadio.value = "false";
+        falseRadio.value = "0";
         if (question.correctAnswer === 0) {
           falseRadio.checked = true;
         }
@@ -121,19 +121,53 @@ createQuestionForm.reset();
           choice4Label.appendChild(document.createTextNode(question.choice4));
           questionDiv.appendChild(choice4Label);
         }
+        if (question.choice5) {
+          const choice5Label = document.createElement("label");
+          const choice5Radio = document.createElement("input");
+          choice5Radio.type = "radio";
+          choice5Radio.name = question.id;
+          choice5Radio.value = "5";
+          if (question.correctAnswer === 5) {
+            choice5Radio.checked = true;
+          }
+          choice5Label.appendChild(choice5Radio);
+          choice5Label.appendChild(document.createTextNode(question.choice5));
+          questionDiv.appendChild(choice5Label);
+        }
       }
 
       testDetailsDiv.appendChild(questionDiv);
     });
+
+    const radioButtons:any = document.querySelectorAll('input[type="radio"]');
+     radioButtons.forEach((button: { addEventListener: (arg0: string, arg1: () => void) => void; value: any; name: any; }) => {
+        button.addEventListener('click', async () => {
+          const formData: any = new FormData();
+          formData.append("questionId", button.name);
+          formData.append("token", token);
+          formData.append("correctAnswer", button.value)
+      
+          const response = await fetch("http://127.0.0.1:5000/api/question/edit", {
+            method: "PUT",
+            body: formData,
+          });
+
+          const data = await response.json()
+          console.log(data)
+    
+  });
+});
+
+
   } catch (error) {
     console.log(error);
   }
 
   const questionTextInput:any = document.getElementById("question-text-input");
   const correctAnswerInputTf:any = document.getElementById("correct-answer-input-tf");
-  const correctAnswerInputMc = document.getElementById("correct-answer-input-mc");
-  const choice1Input = document.getElementById("choice1-input");
-  const choice2Input = document.getElementById("choice2-input");
+  const correctAnswerInputMc: any = document.getElementById("correct-answer-input-mc");
+  const choice1Input: any = document.getElementById("choice1-input");
+  const choice2Input: any= document.getElementById("choice2-input");
   
   createQuestionForm.addEventListener("change", () => {
     let isValid = true;

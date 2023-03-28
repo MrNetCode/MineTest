@@ -34,7 +34,7 @@ router.put("/", upload.none(), async (request, response) => {
         return response.status(401).send({ message: `Missing parameter(s): ${missingParams.join(', ')}` });
       }
 
-      if(correctAnswer.length != 1 || !/^[1-5]+$/.test(correctAnswer)){
+      if(correctAnswer.length != 1 || !/^[0-5]+$/.test(correctAnswer)){
         return response.status(400).send({"massage":"correctAnswer must be an integer"})
       }
   
