@@ -48,6 +48,8 @@ router.post("/", upload.none(), async (request, response) => {
         .send({ message: `Missing parameter(s): ${missingParams.join(", ")}` });
     }
 
+if(type!="text"){
+  if(type!="true-false"){
     if (correctAnswer.length != 1 || !/^[1-5]+$/.test(correctAnswer)) {
       return response
         .status(400)
@@ -83,7 +85,8 @@ router.post("/", upload.none(), async (request, response) => {
         .status(400)
         .send({ message: "correctAnswer must match an existing choice" });
     }
-
+  }
+  }
     // check the token against the database
     const result: any = await (
       await connection
@@ -143,10 +146,6 @@ router.post("/", upload.none(), async (request, response) => {
         question,
         correctAnswer,
       ]);
-      await (await connection).query(
-        "INSERT INTO true_false (id, text, correctAnswer) VALUES (?, ?, ?)",
-        [questionId, question, correctAnswer]
-      );
     } else if (type === "text") {
       await (
         await connection
