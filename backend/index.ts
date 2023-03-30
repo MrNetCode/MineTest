@@ -13,7 +13,7 @@ import user_login from "./routes/user/login";
 import user_logout from "./routes/user/logout";
 import question_create from "./routes/questions/create";
 import question_edit from "./routes/questions/update";
-// import question-delete from "./routes/";
+import question_delete from "./routes/questions/delete";
 import question_fetch from "./routes/questions/fetch";
 import test_create from "./routes/test/create";
 // import test-delete from "./routes/";
@@ -31,6 +31,7 @@ app.use(
 );
 
 app.use("/api/test/create", test_create);
+app.use("/api/question/delete", question_delete);
 app.use("/api/test/fetch", test_fetch);
 app.use("/api/user/logout", user_logout);
 app.use("/api/question/create", question_create);
