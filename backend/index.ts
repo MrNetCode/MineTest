@@ -16,7 +16,7 @@ import question_edit from "./routes/questions/update";
 import question_delete from "./routes/questions/delete";
 import question_fetch from "./routes/questions/fetch";
 import test_create from "./routes/test/create";
-// import test-delete from "./routes/";
+import test_delete from "./routes/test/delete";
 import test_fetch from "./routes/test/fetch";
 // import test-deploy from "./routes/";
 
@@ -37,6 +37,7 @@ app.use("/api/user/logout", user_logout);
 app.use("/api/question/create", question_create);
 app.use("/api/question/fetch", question_fetch);
 app.use("/api/question/edit", question_edit);
+app.use("/api/test/delete", test_delete);
 
 app.use(
   "/api/user/login",
