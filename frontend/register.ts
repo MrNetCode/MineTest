@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         error_message.innerHTML = data.message || data.error;
         return;
       }
-      console.log(data.token);
       localStorage.setItem("token", data.token);
       window.location.href = "./homepage.html";
     } catch (error: any) {

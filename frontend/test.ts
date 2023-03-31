@@ -31,7 +31,6 @@ createQuestionForm.reset();
       window.location.href = "./homepage.html";
     }
     const data = await response.json();
-    console.log(data);
 
     const testDetailsDiv: any = document.getElementById("test-details");
     data.question.forEach((question: any) => {
@@ -39,24 +38,69 @@ createQuestionForm.reset();
       questionDiv.classList.add("question");
 
       const questionDelete = document.createElement("button")
-      questionDelete.name = question.id
-      questionDelete.innerHTML = "delete"
-      questionDiv.appendChild(questionDelete)
+questionDelete.name = question.id
+questionDelete.innerHTML = "🗑"
+questionDiv.appendChild(questionDelete)
 
-      questionDelete.addEventListener("click", async function () {
-        const formData: any = new FormData();
-        formData.append("questionId", questionDelete.name);
-        formData.append("token", token);
-    
-        const response = await fetch("http://localhost:5000/api/question/delete", {
-          method: "POST",
-          body: formData,
-        });
+const moveUp = document.createElement("button")
+moveUp.name = question.id
+moveUp.id = "moveUp"
+moveUp.innerHTML = "↑"
+questionDiv.appendChild(moveUp)
 
-        if(response.status === 200){
-          window.location.reload()
-        }
-      })
+const moveDown = document.createElement("button")
+moveDown.name = question.id
+moveDown.id = "moveDown"
+moveDown.innerHTML = "↓"
+questionDiv.appendChild(moveDown)
+
+moveUp.addEventListener("click", async function () {
+  const formData: any = new FormData();
+  formData.append("questionId", questionDelete.name);
+  formData.append("move", "-1");
+  formData.append("token", token);
+
+  const response = await fetch("http://localhost:5000/api/question/changeorder", {
+    method: "PUT",
+    body: formData,
+  });
+
+  if(response.status === 200){
+    window.location.reload()
+  }
+})
+
+moveDown.addEventListener("click", async function () {
+  const formData: any = new FormData();
+  formData.append("questionId", questionDelete.name);
+  formData.append("move", "1");
+  formData.append("token", token);
+
+  const response = await fetch("http://localhost:5000/api/question/changeorder", {
+    method: "PUT",
+    body: formData,
+  });
+
+  if(response.status === 200){
+    window.location.reload()
+  }
+})
+
+questionDelete.addEventListener("click", async function () {
+  const formData: any = new FormData();
+  formData.append("questionId", questionDelete.name);
+  formData.append("token", token);
+
+  const response = await fetch("http://localhost:5000/api/question/delete", {
+    method: "POST",
+    body: formData,
+  });
+
+  if(response.status === 200){
+    window.location.reload()
+  }
+})
+
 
       const questionText = document.createElement("p");
       questionText.innerText = question.text;
@@ -173,7 +217,7 @@ createQuestionForm.reset();
           });
 
           const data = await response.json()
-          console.log(data)
+
     
   });
 });
@@ -217,7 +261,6 @@ createQuestionForm.reset();
   
     // Enable/disable submit button based on validity
     const submitButton = createQuestionForm.querySelector("button[type='submit']");
-    console.log(isValid)
     submitButton.disabled = !isValid;
   });
 });

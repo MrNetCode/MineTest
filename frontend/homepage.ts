@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   newTestButton.addEventListener("click", async (event: any) => {
     event.preventDefault();
-    console.log(localStorage.getItem("token"));
     try {
       let form: any = new FormData();
       form.append("token", localStorage.getItem("token"));

@@ -18,6 +18,7 @@ import question_fetch from "./routes/questions/fetch";
 import test_create from "./routes/test/create";
 import test_delete from "./routes/test/delete";
 import test_fetch from "./routes/test/fetch";
+import change_order from "./routes/questions/orderChange"
 // import test-deploy from "./routes/";
 
 app.use(
@@ -38,6 +39,7 @@ app.use("/api/question/create", question_create);
 app.use("/api/question/fetch", question_fetch);
 app.use("/api/question/edit", question_edit);
 app.use("/api/test/delete", test_delete);
+app.use("/api/question/changeorder", change_order);
 
 app.use(
   "/api/user/login",

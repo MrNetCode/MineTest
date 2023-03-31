@@ -7,11 +7,13 @@
   margin-bottom: 10px;
   display: inline-block;
   padding-left: 10px;
+  color: #000000;
 }
 
 .question label {
   display: block;
   margin-bottom: 5px;
+  color: #303030;
 }
 
 .question input[type="radio"] {
@@ -19,7 +21,7 @@
 }
 
 form {
-	width: 400px;
+  width: 400px;
   display: flex;
   flex-direction: column;
   margin: 20px;
@@ -28,10 +30,12 @@ form {
   border-radius: 5px;
   font-family: Arial, sans-serif;
   font-size: 16px;
+  background-color: #f8f8f8;
 }
 
 label {
   margin-top: 10px;
+  color: #555;
 }
 
 input[type="text"],
@@ -59,13 +63,12 @@ button[type="submit"]:hover {
 }
 
 button[type="submit"]:disabled {
-	background-color: #bdbdbd;
-  }
+  background-color: #bdbdbd;
+}
 
-
-  button[type="submit"]:hover:disabled {
-	background-color: #9b9b9b;
-  }
+button[type="submit"]:hover:disabled {
+  background-color: #9b9b9b;
+}
 
 .hidden {
   display: none;
