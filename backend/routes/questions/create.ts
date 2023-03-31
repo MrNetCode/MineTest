@@ -132,7 +132,6 @@ if(type!="text"){
       type === "true-false" &&
       (correctAnswer == 1 || correctAnswer == 0)
     ) {
-      console.log("creating true-false question");
       await (
         await connection
       ).query(
@@ -154,7 +153,6 @@ if(type!="text"){
         [questionId, orderNumber, testId, type, question]
       );
     } else {
-      console.log("passing the if");
       if (type === "multi") {
         missingParams = [];
         if (!choice1) missingParams.push("choice1");

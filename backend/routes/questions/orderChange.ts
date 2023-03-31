@@ -128,7 +128,6 @@ router.put("/", upload.none(), async (request, response) => {
       await connection
     ).query("SELECT * FROM questions WHERE test = ?", [result2[0][0].test]);
 
-    console.log(result);
     shiftTestOrderAndSaveToDB(result[0]);
     return response.send({ message: "Updated" });
   } catch (error) {

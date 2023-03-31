@@ -31,7 +31,6 @@ createQuestionForm.reset();
       window.location.href = "./homepage.html";
     }
     const data = await response.json();
-    console.log(data);
 
     const testDetailsDiv: any = document.getElementById("test-details");
     data.question.forEach((question: any) => {
@@ -40,19 +39,19 @@ createQuestionForm.reset();
 
       const questionDelete = document.createElement("button")
 questionDelete.name = question.id
-questionDelete.innerHTML = "delete"
+questionDelete.innerHTML = "🗑"
 questionDiv.appendChild(questionDelete)
 
 const moveUp = document.createElement("button")
 moveUp.name = question.id
 moveUp.id = "moveUp"
-moveUp.innerHTML = "Move Up"
+moveUp.innerHTML = "↑"
 questionDiv.appendChild(moveUp)
 
 const moveDown = document.createElement("button")
 moveDown.name = question.id
 moveDown.id = "moveDown"
-moveDown.innerHTML = "Move Down"
+moveDown.innerHTML = "↓"
 questionDiv.appendChild(moveDown)
 
 moveUp.addEventListener("click", async function () {
@@ -218,7 +217,7 @@ questionDelete.addEventListener("click", async function () {
           });
 
           const data = await response.json()
-          console.log(data)
+
     
   });
 });
@@ -262,7 +261,6 @@ questionDelete.addEventListener("click", async function () {
   
     // Enable/disable submit button based on validity
     const submitButton = createQuestionForm.querySelector("button[type='submit']");
-    console.log(isValid)
     submitButton.disabled = !isValid;
   });
 });
