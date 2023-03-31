@@ -49,6 +49,29 @@ h1 {
   color: #333;
 }
 
-input[type="text"]{
-  
+#newTestTextbox {
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+  margin-right: 10px;
+}
+.table{
+  margin-bottom: 15px;
+}
+#newTest {
+  font-size: 16px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
 }
