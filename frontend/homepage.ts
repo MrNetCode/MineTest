@@ -67,6 +67,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       deleteButton.textContent = "Delete";
     
       deleteButton.addEventListener("click", async function () {
+        if(deleteButton.innerHTML === "Delete"){
+          deleteButton.innerHTML = "Click again to delete";
+          deleteButton.style.borderColor = "red"
+          return;
+        }
         const formData: any = new FormData();
         formData.append("testId", deleteButton.name);
         formData.append("token", localStorage.getItem("token"));
