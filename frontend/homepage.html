@@ -6,17 +6,20 @@
 	<link rel="stylesheet" type="text/css" href="homepage-style.css">
 </head>
 <body>
-    <table class="table">
+
+<button id="logout">Logout</button>
+    <table id="table" class="table">
 		<thead>
 			<tr>
 				<th>Name</th>
 				<th>State</th>
+				<th>Remove</th>
 			</tr>
 		</thead>
 		<tbody id="table-data">
 		</tbody>
 	</table>
-	<center><input type="text" placeholder="New Test Name" id="newTestTextbox">
+	<center><input type="text" maxlength="70" placeholder="New Test Name" id="newTestTextbox">
 	<input type="submit" value="New Test" name="newTest" id="newTest">
 	<div id="error-message"></div></center>
 
