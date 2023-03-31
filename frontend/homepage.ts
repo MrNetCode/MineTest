@@ -35,11 +35,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       body: formData,
     });
   
-    const data = await response.json();
+    const data: any = await response.json();
   
     if (response.status !== 200) {
       error_message.innerHTML = data.message || data.error;
       return;
+    }
+    
+    if(!data.data.length){
+      const table: any = document.getElementById("table");
+      table.remove()
     }
   
     const table: any = document.getElementById("table");
