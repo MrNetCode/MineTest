@@ -49,7 +49,7 @@ WHERE q.test = ? ORDER BY q.order;
     let blockDatabase: any
 
   commandFile = writeCommandFile(questions)
-  // console.log(writeSchedulerFile(questions))
+  console.log(writeSchedulerFile(questions))
 
     console.log(commandFile);
 
@@ -67,7 +67,7 @@ WHERE q.test = ? ORDER BY q.order;
 
     }
 
-    return response.send({message : "ok"})
+    return response.send({message : "Not Implemented yet!"})
   } catch (error) {
     console.log(error);
     return response.status(500).send({ error: "Internal server error" });
