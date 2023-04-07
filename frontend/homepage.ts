@@ -34,7 +34,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       method: "POST",
       body: formData,
     });
-  
+    
+    if(response.status == 401){
+window.location.href = "./login.html"
+    }
     const data: any = await response.json();
   
     if (response.status !== 200) {

@@ -19,7 +19,7 @@ import test_create from "./routes/test/create";
 import test_delete from "./routes/test/delete";
 import test_fetch from "./routes/test/fetch";
 import change_order from "./routes/questions/orderChange"
-// import test-deploy from "./routes/";
+import test_prepare from "./routes/test/prepare";
 
 app.use(
   "/api/user/register",
@@ -32,6 +32,7 @@ app.use(
 );
 
 app.use("/api/test/create", test_create);
+app.use("/api/test/prepare", test_prepare);
 app.use("/api/question/delete", question_delete);
 app.use("/api/test/fetch", test_fetch);
 app.use("/api/user/logout", user_logout);
