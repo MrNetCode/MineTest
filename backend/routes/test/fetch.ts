@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import dotenv from "dotenv";
 import express from "express";
 dotenv.config();
@@ -17,8 +16,16 @@ import { shiftTestOrderAndSaveToDB } from "../../functions/shiftTest";
 
 console.log("Loaded Test Fetch Endpoint");
 
-// handle GET requests to fetch a test
-router.post("/", upload.none(), async (request, response) => {
+router.use(express.json({type: "*/*"}))
+
+router.use((err: any, req: any, res: any, next: any) => {
+  if (err.status === 400 && err instanceof SyntaxError  && 'body' in err) {
+      return res.status(400).send({ status: 400 }); // Bad request
+  }
+  next();
+});
+// handle POST requests to register new users
+router.post("/", async (request, response) => {
   try {
     if (!request.body) {
       return response.status(400).send({ message: "Bad Request" });
@@ -60,6 +67,7 @@ router.post("/", upload.none(), async (request, response) => {
     }
 
     const test = result[0][0];
+    const port = result[0][0].port
 
     // check if the user has access to the test
     if (test.author !== result[0][0].username) {
@@ -75,7 +83,7 @@ router.post("/", upload.none(), async (request, response) => {
     // return the test to the client
     return response
       .status(200)
-      .send({ test: test, questions: await shiftTestOrderAndSaveToDB(result[0]) });
+      .send({ test: test, questions: await shiftTestOrderAndSaveToDB(result[0]), "port": port});
   } catch (error: any) {
     // handle errors
     console.log(error);

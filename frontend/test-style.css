@@ -1,3 +1,7 @@
+*{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .question {
   margin-bottom: 20px;
 }
@@ -14,6 +18,7 @@
   display: block;
   margin-bottom: 5px;
   color: #303030;
+  width: 200px;
 }
 
 .question input[type="radio"] {

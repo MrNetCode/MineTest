@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import express from "express";
 import { connection } from "../../functions/DB_Connection";
 import cors from "cors";
-import multer, { memoryStorage } from "multer";
 
 dotenv.config();
 const router = express.Router();
@@ -12,12 +11,15 @@ console.log("Loaded Question Edit Endpoint")
 // enable Cross-Origin Resource Sharing
 router.use(cors());
 
-// initialize multer for file uploads
-const upload = multer();
+router.use(express.json({type: "*/*"}))
 
+router.use((err: any, req: any, res: any, next: any) => {
+  if (err.status === 400 && err instanceof SyntaxError  && 'body' in err) {
+      return res.status(400).send({ status: 400 }); // Bad request
+  }
+});
 
-// handle PUT requests to update existing questions
-router.put("/", upload.none(), async (request, response) => {
+router.put("/", async (request, response) => {
     try {
       if (!request.body) {
         return response.status(400).send({ message: "Bad Request" });

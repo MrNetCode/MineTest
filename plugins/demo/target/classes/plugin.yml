@@ -1,0 +1,15 @@
+main: dev.mine.App
+name: demo
+version: 0.1
+commands:
+  book:
+    description: Sends a greeting message to the player
+    usage: /book
+  hint:
+    description: Sends a greeting message to the player
+    usage: /sheep
+  setmeta:
+    description: Sends a greeting message to the player
+    usage: /setmeta
+api-version: 1.18
+depend: [ProtocolLib]

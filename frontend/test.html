@@ -4,14 +4,26 @@
     <link rel="stylesheet" href="./test-style.css">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test Page</title>
+    <title>Test</title>
   </head>
   <body>
     <a href="./homepage.html">Back to home</a>
+    <button id="prepare-test" >Prepare Test</button>
+    <button id="start-server" >Start Server</button>
+    <button id="start-test" >Start Test</button>
+    <button id="stop-server" >Stop Server</button>
+    <button id="show-answers" >Show Answers</button>
+    <div id="text-hint"></div>
+    <div id="server-status">
+      <p id="server-status">Server: </p>
+      <p id="server-status">Players: </p>
+      <p id="server-status">Ping: </p>
+      
+    </div>
     <div id="test-details"></div>
     <form id="create-question-form">
       <label for="question-text-input">* Question Text:</label>
-      <input type="text" id="question-text-input" autocomplete="off"><br>
+      <input type="text" id="question-text-input" autocomplete="off" maxlength="126"><br>
     
       <label for="question-type-select">* Question Type:</label>
       <select id="question-type-select" required>
@@ -61,5 +73,6 @@
     </form>
 
     <script src="./test.js"></script>
+    <p id="footer" class="footer" style="position: fixed;bottom: 0;margin-bottom: 5px;font-size: 11px;width: 100%;text-align: center;">Loading Info...</p>
   </body>
 </html>

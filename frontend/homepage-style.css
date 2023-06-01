@@ -3,6 +3,11 @@ body {
   background-color: #ffffff;
 }
 
+*{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
 /* Style the table */
 table {
   border-collapse: collapse;
@@ -56,6 +61,7 @@ h1 {
   border-radius: 5px;
   width: 250px;
   margin-right: 10px;
+  margin-bottom: 40px;
 }
 .table{
   margin-bottom: 15px;
@@ -74,4 +80,8 @@ h1 {
   color: red;
   font-size: 14px;
   margin-top: 10px;
+}
+
+#newTest:disabled {
+background-color: #bdbdbd
 }

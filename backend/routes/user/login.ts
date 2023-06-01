@@ -1,10 +1,8 @@
 import crypto from "crypto";
 import dotenv from "dotenv";
-import express from "express";
+import express, { response } from "express";
 dotenv.config();
 import cors from "cors";
-import multer from "multer";
-
 const router = express.Router();
 
 // enable Cross-Origin Resource Sharing
@@ -16,12 +14,20 @@ import { usernameValidator } from "../../functions/usernameValidator.js";
 
 console.log("Loaded User Login Endpoint");
 
-// initialize multer for file uploads
-const upload = multer();
+router.use(express.json({type: "*/*"}))
+
+router.use((err: any, req: any, res: any, next: any) => {
+  if (err.status === 400 && err instanceof SyntaxError  && 'body' in err) {
+      return res.status(400).send({ status: 400 }); // Bad request
+  }
+  next();
+});
+
 
 // handle POST requests to register new users
-router.post("/", upload.none(), async (request, response) => {
+router.post("/" , async (request, response) => {
   try {
+
     if(!request.body){
       return response.status(400).send({message :"Bad Request"})
     }
@@ -31,7 +37,7 @@ router.post("/", upload.none(), async (request, response) => {
     if (!username || !password) {
       return response
         .status(401)
-        .send({ message: "missing username or password" });
+        .send({ message: "Missing username or password" });
     }
 
     // validate the username
@@ -56,16 +62,15 @@ router.post("/", upload.none(), async (request, response) => {
   }
 
     // generate a random token
-    const token = crypto.randomBytes(30).toString("hex");
+    const token = crypto.randomBytes(50).toString("hex");
+    
+     response.status(201).send({ token: token });
 
     // insert the token into the database
     await (await connection).query(
       "INSERT INTO tokens (username, token) VALUES (?,?)",
       [username, token]
     );
-
-    // return the token to the client
-    return response.status(201).send({ token: token });
 
   } catch (error: any) {
     // handle errors

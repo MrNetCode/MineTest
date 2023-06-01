@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
+  let port: any
+  if(window.location.port === "5500"){port= ":"+80;}
+  
   const submitBtn: any = document.getElementById("submit");
   const username: any = document.getElementById("username");
   const password: any = document.getElementById("password");
@@ -6,6 +9,14 @@ document.addEventListener("DOMContentLoaded", async function () {
   const totp: any = document.getElementById("code");
 
   const error_message: any = document.getElementById("error-message");
+
+  const response: any = await fetch(window.location.protocol+"//"+window.location.hostname+port+"/api/footer", {
+    method: "GET",
+  });
+  const data = await response.json();
+
+  let footer: any = document.getElementById("footer");
+  footer.innerHTML = data.footer;
 
   submitBtn.disabled = true;
 
@@ -40,17 +51,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   submitBtn.addEventListener("click", async (event: any) => {
     event.preventDefault();
+    
     try {
-      let form = new FormData();
-      form.append("username", username.value);
-      form.append("password", password.value);
-      form.append("code", totp.value);
-
-      const response = await fetch("http://127.0.0.1:5000/api/user/register", {
+      const response = await fetch(window.location.protocol+"//"+window.location.hostname+port+"/api/user/register", {
         method: "POST",
-        //? Add this header in this request to skip the TOTP code check and get a fake token
-        // headers: {"test": "test"},
-        body: form,
+        body: JSON.stringify({"username":username.value, "password": password.value, "code": totp.value}),
       });
 
       const data = await response.json();

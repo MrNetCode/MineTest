@@ -1,0 +1,10 @@
+MineTest-Lobby:
+  loc: world:-78.8:168.0:15.5
+  text:
+  - 'Vi trovate nella mappa: §2§lSerra'
+  - 'Modalità: §5§lRicerca'
+  - Trovate tutte le casse e rispondete alle domande
+MineTest-Lobby-StartInfo:
+  loc: world:-81.51214816101697:167.0:22.576331679900196
+  text:
+  - §cPremi per §liniziare§r§c la verifica

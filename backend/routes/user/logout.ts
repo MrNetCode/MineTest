@@ -1,24 +1,28 @@
-import crypto from "crypto";
 import dotenv from "dotenv";
 import express from "express";
 dotenv.config();
 import cors from "cors";
-import multer from "multer";
 
 const router = express.Router();
 
 // enable Cross-Origin Resource Sharing
 router.use(cors());
 
-const upload = multer()
-
 // import database connection object and helper functions
 import { connection } from "../../functions/DB_Connection";
 
 console.log("Loaded User Logout Endpoint");
 
-// handle POST requests to logout users
-router.post("/", upload.none(), async (request, response) => {
+router.use(express.json({type: "*/*"}))
+
+router.use((err: any, req: any, res: any, next: any) => {
+  if (err.status === 400 && err instanceof SyntaxError  && 'body' in err) {
+      return res.status(400).send({ status: 400 }); // Bad request
+  }
+  next();
+});
+// handle POST requests to register new users
+router.post("/", async (request, response) => {
   try {
     if (!request.body || !request.body.token) {
       return response.status(400).send({ message: "Bad Request" });

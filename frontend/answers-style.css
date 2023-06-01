@@ -1,0 +1,22 @@
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  .correct {
+    background-color: #d3ffce;
+  }
+  
+  .incorrect {
+    background-color: #ffcece;
+  }
+
+  table td {
+    max-width: 300px;
+    word-wrap: break-word;
+  }
+  

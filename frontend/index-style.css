@@ -1,0 +1,29 @@
+*{
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    overflow: hidden;
+}
+header {
+    background-image: url(./assets/background.jpg);
+    background-position: 0 -8cm; 
+    background-size: cover;
+    
+    width: 101%;
+    height: 20vw; /* set a height for the header */
+    position: relative; /* set the header as the reference position for child elements */
+  }
+  .logo-container {
+    position: absolute; /* position the logo container relative to the header */
+    top: 50%; /* position the top of the container at the vertical center of the header */
+    left: 50%; /* position the left of the container at the horizontal center of the header */
+    transform: translate(-50%, -80%);
+    height: 10vw;
+  }
+
+  .logo-container img {
+    -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+    max-height: 100%; /* adjust the max-height of the logo image as needed */
+  }

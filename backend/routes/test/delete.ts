@@ -1,9 +1,7 @@
-import crypto from "crypto";
 import dotenv from "dotenv";
 import express from "express";
 dotenv.config();
 import cors from "cors";
-import multer from "multer";
 
 const router = express.Router();
 
@@ -15,11 +13,15 @@ import { connection } from "../../functions/DB_Connection";
 
 console.log("Loaded Test Delete Endpoint");
 
-// initialize multer for file uploads
-const upload = multer();
+router.use(express.json({type: "*/*"}))
 
-// handle POST requests to register new users
-router.post("/", upload.none(), async (request, response) => {
+router.use((err: any, req: any, res: any, next: any) => {
+  if (err.status === 400 && err instanceof SyntaxError  && 'body' in err) {
+      return res.status(400).send({ status: 400 }); // Bad request
+  }
+});
+
+router.post("/", async (request, response) => {
   try {
     if (!request.body) {
       return response.status(400).send({ message: "Bad Request" });

@@ -1,0 +1,10 @@
+digraph "dev.mine:demo:jar:1.0-SNAPSHOT" { 
+	"dev.mine:demo:jar:1.0-SNAPSHOT" -> "com.comphenix.protocol:ProtocolLib:jar:4.8.0:provided" ; 
+	"dev.mine:demo:jar:1.0-SNAPSHOT" -> "org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" ; 
+	"com.comphenix.protocol:ProtocolLib:jar:4.8.0:provided" -> "net.bytebuddy:byte-buddy:jar:1.12.8:provided" ; 
+	"org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" -> "commons-lang:commons-lang:jar:2.6:provided" ; 
+	"org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" -> "com.google.guava:guava:jar:21.0:provided" ; 
+	"org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" -> "com.google.code.gson:gson:jar:2.8.0:provided" ; 
+	"org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" -> "net.md-5:bungeecord-chat:jar:1.16-R0.4:provided" ; 
+	"org.spigotmc:spigot-api:jar:1.17-R0.1-SNAPSHOT:provided" -> "org.yaml:snakeyaml:jar:1.28:provided" ; 
+ } 

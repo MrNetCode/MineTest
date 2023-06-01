@@ -1,0 +1,81 @@
+hints:
+  hint1:
+    x: -21
+    y: 67
+    z: 15
+  hint2:
+    x: -9
+    y: 77
+    z: -29
+  hint3:
+    x: 23
+    y: 71
+    z: -9
+  hint4:
+    x: 27
+    y: 66
+    z: 15
+  hint5:
+    x: -28
+    y: 79
+    z: -1
+  hint6:
+    x: -1
+    y: 80
+    z: 27
+  hint7:
+    x: -28
+    y: 77
+    z: -10
+  hint8:
+    x: 22
+    y: 67
+    z: 11
+  hint9:
+    x: -19
+    y: 79
+    z: 25
+  hint10:
+    x: -19
+    y: 77
+    z: 5
+  hint11:
+    x: -27
+    y: 69
+    z: -1
+  hint12:
+    x: 11
+    y: 76
+    z: 29
+  hint13:
+    x: -23
+    y: 70
+    z: 15
+  hint14:
+    x: 0
+    y: 77
+    z: 2
+  hint15:
+    x: -12
+    y: 63
+    z: -36
+  hint16:
+    x: 25
+    y: 78
+    z: -7
+  hint17:
+    x: 16
+    y: 80
+    z: -21
+  hint18:
+    x: 15
+    y: 71
+    z: 11
+  hint19:
+    x: 29
+    y: 76
+    z: 3
+  hint20:
+    x: -9
+    y: 76
+    z: 32

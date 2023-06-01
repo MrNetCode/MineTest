@@ -1,0 +1,5 @@
+server.basics:
+       description: Basic permissions for Server.
+       default: true
+       children:
+          mycommand.block.all.use: true
